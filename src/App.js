@@ -28,29 +28,34 @@ class App extends React.Component {
   }
 
   render() {
+    const {
+      cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3,
+      cardImage, cardRare, cardTrunfo,
+    } = this.state;
+
     return (
       <div>
         <h1>Tryunfo</h1>
         <Form
-          cardName={ this.state.cardName }
-          cardDescription={ this.state.cardDescription }
-          cardAttr1={ this.state.cardAttr1 }
-          cardAttr2={ this.state.cardAttr2 }
-          cardAttr3={ this.state.cardAttr3 }
-          cardImage={ this.state.cardImage }
-          cardRare={ this.state.cardRare }
-          cardTrunfo={ this.state.cardTrunfo }
+          cardName={ cardName }
+          cardDescription={ cardDescription }
+          cardAttr1={ cardAttr1 }
+          cardAttr2={ cardAttr2 }
+          cardAttr3={ cardAttr3 }
+          cardImage={ cardImage }
+          cardRare={ cardRare }
+          cardTrunfo={ cardTrunfo }
           onInputChange={ this.onInputChange }
         />
         <Card
-          cardName={ this.state.cardName }
-          cardDescription={ this.state.cardDescription }
-          cardAttr1={ this.state.cardAttr1 }
-          cardAttr2={ this.state.cardAttr2 }
-          cardAttr3={ this.state.cardAttr3 }
-          cardImage={ this.state.cardImage }
-          cardRare={ this.state.cardRare }
-          cardTrunfo={ this.state.cardTrunfo }
+          cardName={ cardName }
+          cardDescription={ cardDescription }
+          cardAttr1={ cardAttr1 }
+          cardAttr2={ cardAttr2 }
+          cardAttr3={ cardAttr3 }
+          cardImage={ cardImage }
+          cardRare={ cardRare }
+          cardTrunfo={ cardTrunfo }
         />
       </div>
     );
