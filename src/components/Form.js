@@ -2,36 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 class Form extends React.Component {
-//   constructor() {
-//     super();
-
-  //     this.onInputChange = this.onInputChange.bind(this);
-  //     this.onSaveButtonClick = this.onSaveButtonClick.bind(this);
-
-  //     this.state = {
-  //       cardName: ' ',
-  //       cardDescription: ' ',
-  //       cardAttr1: ' ',
-  //       cardAttr2: ' ',
-  //       cardAttr3: ' ',
-  //       cardImage: ' ',
-  //       cardRare: ' ',
-  //       cardTrunfo: false,
-  //       hasTrunfo: false,
-  //       isSaveButtonDisabled: false,
-
-  //     };
-  //   }
-
-  //   onInputChange({ target }) {
-  //     const { name, value } = target;
-  //     this.setState({ [name]: value });
-  //   }
-
-  //   onSaveButtonClick() {
-  //     this.setState({ isSaveButtonDisabled: true });
-  //   }
-
   render() {
     const {
       cardName,
