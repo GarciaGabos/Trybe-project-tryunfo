@@ -57,9 +57,13 @@ class App extends React.Component {
       cardRare: 'normal',
       myDeck: [...previousState.myDeck, newCard],
     }), () => this.setState({
-      hasTrunfo: !!cardTrunfo || myDeck.includes((carts) => carts.cardTrunfo),
+      hasTrunfo: !!cardTrunfo,
     }));
   };
+
+  // , () => this.setState({
+  //   hasTrunfo: !!cardTrunfo || myDeck.includes((carts) => carts.cardTrunfo),
+  // })
 
   onInputChange({ target }) {
     const { name } = target;
