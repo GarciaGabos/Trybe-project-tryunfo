@@ -18,8 +18,6 @@ class Form extends React.Component {
       onSaveButtonClick,
     } = this.props;
 
-    console.log(hasTrunfo);
-
     return (
       <div>
         <h1>Adicionar nova carta</h1>

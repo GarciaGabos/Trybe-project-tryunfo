@@ -61,16 +61,39 @@ class App extends React.Component {
     }));
   };
 
-  // , () => this.setState({
-  //   hasTrunfo: !!cardTrunfo || myDeck.includes((carts) => carts.cardTrunfo),
-  // })
-
   onInputChange({ target }) {
     const { name } = target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     this.setState({ [name]: value },
       () => this.saveConditions());
     this.checkTrunf();
+    this.showDeck();
+  }
+
+  showDeck() {
+    const { myDeck } = this.state;
+    const data = myDeck.map((eachCard, i) => {
+      const { cardName,
+        cardDescription,
+        cardAttr1,
+        cardAttr2,
+        cardAttr3,
+        cardImage,
+        cardRare,
+        cardTrunfo } = eachCard;
+      return (<Card
+        cardName={ cardName }
+        cardDescription={ cardDescription }
+        cardAttr1={ cardAttr1 }
+        cardAttr2={ cardAttr2 }
+        cardAttr3={ cardAttr3 }
+        cardImage={ cardImage }
+        cardRare={ cardRare }
+        cardTrunfo={ cardTrunfo }
+        key={ i }
+      />);
+    });
+    return data;
   }
 
   checkTrunf() {
@@ -142,6 +165,8 @@ class App extends React.Component {
           cardRare={ cardRare }
           cardTrunfo={ cardTrunfo }
         />
+        <h1>Lista de Cartas:</h1>
+        { this.showDeck()}
       </div>
     );
   }
