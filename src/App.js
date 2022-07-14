@@ -16,16 +16,65 @@ class App extends React.Component {
       cardAttr2: '0',
       cardAttr3: '0',
       cardImage: '',
-      cardRare: '',
+      cardRare: 'normal',
       cardTrunfo: false,
-      // hasTrunfo: false,
+      hasTrunfo: false,
       isSaveButtonDisabled: true,
+      myDeck: [],
     };
   }
 
+  onSaveButtonClick = (e) => {
+    e.preventDefault();
+
+    const {
+      cardName,
+      cardDescription,
+      cardImage,
+      cardAttr1,
+      cardAttr2,
+      cardAttr3,
+      cardRare,
+      cardTrunfo } = this.state;
+
+    const newCard = {
+      cardName,
+      cardDescription,
+      cardImage,
+      cardAttr1,
+      cardAttr2,
+      cardAttr3,
+      cardRare,
+      cardTrunfo };
+
+    this.setState((previousState) => ({
+      cardName: '',
+      cardDescription: '',
+      cardAttr1: '0',
+      cardAttr2: '0',
+      cardAttr3: '0',
+      cardImage: '',
+      cardRare: 'normal',
+      myDeck: [...previousState.myDeck, newCard],
+    }), () => this.setState({
+      hasTrunfo: !!cardTrunfo || myDeck.includes((carts) => carts.cardTrunfo),
+    }));
+  };
+
   onInputChange({ target }) {
-    const { name, value } = target;
-    this.setState({ [name]: value }, () => this.saveConditions());
+    const { name } = target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    this.setState({ [name]: value },
+      () => this.saveConditions());
+    this.checkTrunf();
+  }
+
+  checkTrunf() {
+    const { myDeck } = this.state;
+    const trunfoCheck = myDeck.some((card) => card.cardTrunfo === true);
+    if (trunfoCheck === true) {
+      this.setState({ hasTrunfo: true });
+    }
   }
 
   saveConditions() {
@@ -56,13 +105,14 @@ class App extends React.Component {
   render() {
     const {
       cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3,
-      cardImage, cardRare, cardTrunfo, isSaveButtonDisabled,
+      cardImage, cardRare, cardTrunfo, isSaveButtonDisabled, hasTrunfo,
     } = this.state;
 
     return (
       <div>
         <h1>Tryunfo</h1>
         <Form
+          handleSubmit={ this.handleSubmit }
           cardName={ cardName }
           cardDescription={ cardDescription }
           cardAttr1={ cardAttr1 }
@@ -71,9 +121,12 @@ class App extends React.Component {
           cardImage={ cardImage }
           cardRare={ cardRare }
           cardTrunfo={ cardTrunfo }
+          hasTrunfo={ hasTrunfo }
           isSaveButtonDisabled={ isSaveButtonDisabled }
           onSaveButtonClick={ this.onSaveButtonClick }
           onInputChange={ this.onInputChange }
+          addNewCart={ this.addNewCart }
+
         />
         <Card
           cardName={ cardName }
