@@ -21,7 +21,7 @@ class Form extends React.Component {
     return (
       <div>
         <h1>Adicionar nova carta</h1>
-        <form className="myCart" onSubmit={ this.handleSubmit }>
+        <form className="myCart">
           <label htmlFor="name-input">
             Nome da carta:
             <input

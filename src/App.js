@@ -67,33 +67,13 @@ class App extends React.Component {
     this.setState({ [name]: value },
       () => this.saveConditions());
     this.checkTrunf();
-    this.showDeck();
   }
 
-  showDeck() {
-    const { myDeck } = this.state;
-    const data = myDeck.map((eachCard, i) => {
-      const { cardName,
-        cardDescription,
-        cardAttr1,
-        cardAttr2,
-        cardAttr3,
-        cardImage,
-        cardRare,
-        cardTrunfo } = eachCard;
-      return (<Card
-        cardName={ cardName }
-        cardDescription={ cardDescription }
-        cardAttr1={ cardAttr1 }
-        cardAttr2={ cardAttr2 }
-        cardAttr3={ cardAttr3 }
-        cardImage={ cardImage }
-        cardRare={ cardRare }
-        cardTrunfo={ cardTrunfo }
-        key={ i }
-      />);
-    });
-    return data;
+  deleteCard({ target }) {
+    const pai = target.parentElement;
+    // const { myDeck } = this.state;
+    // console.log(target.id);
+    pai.remove();
   }
 
   checkTrunf() {
@@ -132,7 +112,7 @@ class App extends React.Component {
   render() {
     const {
       cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3,
-      cardImage, cardRare, cardTrunfo, isSaveButtonDisabled, hasTrunfo,
+      cardImage, cardRare, cardTrunfo, isSaveButtonDisabled, hasTrunfo, myDeck,
     } = this.state;
 
     return (
@@ -165,8 +145,23 @@ class App extends React.Component {
           cardRare={ cardRare }
           cardTrunfo={ cardTrunfo }
         />
-        <h1>Lista de Cartas:</h1>
-        { this.showDeck()}
+        <h1>Meu Baralho:</h1>
+        { myDeck.map((eachCard, i) => (
+          <div key={ i }>
+            <Card
+              cardName={ eachCard.cardName }
+              cardDescription={ eachCard.cardDescription }
+              cardAttr1={ eachCard.cardAttr1 }
+              cardAttr2={ eachCard.cardAttr2 }
+              cardAttr3={ eachCard.cardAttr3 }
+              cardImage={ eachCard.cardImage }
+              cardRare={ eachCard.cardRare }
+              cardTrunfo={ eachCard.cardTrunfo }
+            />
+            <button type="button" id={ eachCard.cardName } onClick={ this.deleteCard }>
+              Excluir
+            </button>
+          </div>)) }
       </div>
     );
   }
