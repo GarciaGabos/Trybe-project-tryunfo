@@ -69,11 +69,15 @@ class App extends React.Component {
     this.checkTrunf();
   }
 
-  deleteCard({ target }) {
-    const pai = target.parentElement;
-    // const { myDeck } = this.state;
-    // console.log(target.id);
-    pai.remove();
+  removeCard = ({ cardName }) => {
+    const { myDeck } = this.state;
+    this.setState((prevState) => ({
+      myDeck: prevState.myDeck.filter((card) => card.cardName !== cardName),
+    }), () => {
+      if (myDeck.some((card) => card.cardTrunfo === true && card.cardName === cardName)) {
+        this.setState({ hasTrunfo: false });
+      }
+    });
   }
 
   checkTrunf() {
@@ -107,6 +111,10 @@ class App extends React.Component {
     } else {
       this.setState({ isSaveButtonDisabled: true });
     }
+  }
+
+  filterName({ target }) {
+    console.log(target.innerHTML);
   }
 
   render() {
@@ -158,10 +166,21 @@ class App extends React.Component {
               cardRare={ eachCard.cardRare }
               cardTrunfo={ eachCard.cardTrunfo }
             />
-            <button type="button" id={ eachCard.cardName } onClick={ this.deleteCard }>
+            <button
+              type="button"
+              data-testid="delete-button"
+              onClick={ () => this.removeCard(eachCard) }
+            >
               Excluir
             </button>
           </div>)) }
+        <p>Filtros de pesquisa:</p>
+        <input
+          data-testid="name-filter"
+          name="filter"
+          type="text"
+          onChange={ this.filterName }
+        />
       </div>
     );
   }
