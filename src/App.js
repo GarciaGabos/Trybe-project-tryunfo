@@ -21,7 +21,15 @@ class App extends React.Component {
       hasTrunfo: false,
       isSaveButtonDisabled: true,
       myDeck: [],
+      searchName: '',
+      filterRare: 'todas',
     };
+  }
+
+  handleSearchName = ({ target }) => {
+    this.setState({
+      searchName: target.value,
+    });
   }
 
   onSaveButtonClick = (e) => {
@@ -113,13 +121,10 @@ class App extends React.Component {
     }
   }
 
-  filterName({ target }) {
-    console.log(target.innerHTML);
-  }
-
   render() {
     const {
-      cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3,
+      cardName, cardDescription, cardAttr1, cardAttr2,
+      cardAttr3, searchName, filterRare,
       cardImage, cardRare, cardTrunfo, isSaveButtonDisabled, hasTrunfo, myDeck,
     } = this.state;
 
@@ -154,33 +159,74 @@ class App extends React.Component {
           cardTrunfo={ cardTrunfo }
         />
         <h1>Meu Baralho:</h1>
-        { myDeck.map((eachCard, i) => (
-          <div key={ i }>
-            <Card
-              cardName={ eachCard.cardName }
-              cardDescription={ eachCard.cardDescription }
-              cardAttr1={ eachCard.cardAttr1 }
-              cardAttr2={ eachCard.cardAttr2 }
-              cardAttr3={ eachCard.cardAttr3 }
-              cardImage={ eachCard.cardImage }
-              cardRare={ eachCard.cardRare }
-              cardTrunfo={ eachCard.cardTrunfo }
-            />
-            <button
-              type="button"
-              data-testid="delete-button"
-              onClick={ () => this.removeCard(eachCard) }
-            >
-              Excluir
-            </button>
-          </div>)) }
         <p>Filtros de pesquisa:</p>
-        <input
-          data-testid="name-filter"
-          name="filter"
-          type="text"
-          onChange={ this.filterName }
-        />
+        <p>Por Nome:</p>
+        <label htmlFor="search-card">
+          <input
+            data-testid="name-filter"
+            type="text"
+            name="search-card"
+            id="search-card"
+            onChange={ this.handleSearchName }
+          />
+        </label>
+        <p>Por raridade:</p>
+        <select
+          data-testid="rare-filter"
+          onChange={ this.onInputChange }
+          name="filterRare"
+          placeholder="Selecione a raridade"
+        >
+          <option>todas</option>
+          <option>normal</option>
+          <option>raro</option>
+          <option>muito raro</option>
+        </select>
+        { filterRare === 'todas'
+          ? myDeck
+            .filter((card) => card.cardName.includes(searchName))
+            .map((eachCard, i) => (
+              <div key={ i }>
+                <Card
+                  cardName={ eachCard.cardName }
+                  cardDescription={ eachCard.cardDescription }
+                  cardAttr1={ eachCard.cardAttr1 }
+                  cardAttr2={ eachCard.cardAttr2 }
+                  cardAttr3={ eachCard.cardAttr3 }
+                  cardImage={ eachCard.cardImage }
+                  cardRare={ eachCard.cardRare }
+                  cardTrunfo={ eachCard.cardTrunfo }
+                />
+                <button
+                  type="button"
+                  data-testid="delete-button"
+                  onClick={ () => this.removeCard(eachCard) }
+                >
+                  Excluir
+                </button>
+              </div>)) : myDeck
+            .filter((card) => card.cardName.includes(searchName))
+            .filter((cards) => cards.cardRare === filterRare)
+            .map((eachCard) => (
+              <div key={ eachCard.cardName }>
+                <Card
+                  cardName={ eachCard.cardName }
+                  cardDescription={ eachCard.cardDescription }
+                  cardAttr1={ eachCard.cardAttr1 }
+                  cardAttr2={ eachCard.cardAttr2 }
+                  cardAttr3={ eachCard.cardAttr3 }
+                  cardImage={ eachCard.cardImage }
+                  cardRare={ eachCard.cardRare }
+                  cardTrunfo={ eachCard.cardTrunfo }
+                />
+                <button
+                  type="button"
+                  data-testid="delete-button"
+                  onClick={ () => this.removeCard(eachCard) }
+                >
+                  Excluir
+                </button>
+              </div>)) }
       </div>
     );
   }
